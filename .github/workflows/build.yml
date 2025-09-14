@@ -12,8 +12,6 @@ on:
   # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
   workflow_dispatch:
 
-  push:
-    branches-ignore: [ "main" ]
   pull_request:
     branches: [ "main" ]
 

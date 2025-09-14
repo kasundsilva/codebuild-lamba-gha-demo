@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="aws-badge">
-          🇳🇿 AWS Community Day NZ 2024
+          🇳🇿 AWS Community Day NZ 2025
         </div>
         <h1 className="main-title">
           AWS CodeBuild Meets GitHub Actions
@@ -50,7 +50,7 @@ function App() {
       </header>
 
       <footer className="app-footer">
-        <p>Built with ❤️ for AWS Community Day New Zealand 2024</p>
+        <p>Built with ❤️ for AWS Community Day New Zealand 2025</p>
         <p className="demo-note">🎯 Exploring modern CI/CD patterns with AWS & GitHub</p>
       </footer>
     </div>

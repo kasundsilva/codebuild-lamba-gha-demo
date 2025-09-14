@@ -4,12 +4,13 @@ name: deploy
 
   # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
 on:
-  release:
-    types: [published]
+# run on merge to main branch
+  push:
+    branches: [ "main" ]
 
   # manual trigger from GitHub UI
   # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
-  workflow_dispatch
+  workflow_dispatch:
 
 jobs:
   build:
@@ -48,4 +49,3 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'ap-southeast-2'   # optional: defaults to us-east-1
           SOURCE_DIR: 'build'      # optional: defaults to entire repository
-          

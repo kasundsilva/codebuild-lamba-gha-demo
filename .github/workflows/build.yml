@@ -1,0 +1,58 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: build
+
+on:
+  # support calling this workflow from other workflows
+  # https://docs.github.com/en/actions/learn-github-actions/reusing-workflows#creating-a-reusable-workflow
+  workflow_call:
+
+  # manual trigger from GitHub UI
+  # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
+  workflow_dispatch:
+
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on:
+        - codebuild-codebuild-meets-gha-${{ github.run_id }}-${{ github.run_attempt }}
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Build
+      run: npm run build
+
+    # upload the artifact for use in either CD
+    # here, the 'dist' directory is compressed and uploaded to GitHub asset storage as 'build-artifact'
+    - name: Upload artifact
+      # https://github.com/actions/upload-artifact
+      uses: actions/upload-artifact@v4
+      with:
+        # the name to save the compressed asset as
+        name: build-artifact
+        # the directory or file to upload. adapt to your needs
+        path: build
+        # the artifact is only needed for the duration of the build-deploy workflow
+        # adapt to your needs
+        # https://github.com/actions/upload-artifact#retention-periodworkflows
+        retention-days: 1
+        

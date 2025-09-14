@@ -6,12 +6,10 @@ name: deploy
 on:
   release:
     types: [published]
-    
+
   # manual trigger from GitHub UI
   # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
-  workflow_dispatch:
-
-
+  workflow_dispatch
 
 jobs:
   build:
